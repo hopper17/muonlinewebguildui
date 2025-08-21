@@ -38,52 +38,48 @@
       return;
     }
 
-    form.addEventListener('submit', function calcular(e){
-      e.preventDefault();
+function calcular(e){
+  e.preventDefault();
 
-      const level    = clamp(parseInt($('level').value, 10), 1, 1700);
-      const progreso = clamp(parseInt($('progreso').value, 10), 0, 100);
-      const exp      = parseInt($('exp').value, 10);
+  const level    = clamp(parseInt($('level').value, 10), 1, 1700);
+  const progreso = clamp(parseInt($('progreso').value, 10), 0, 100);
+  const exp      = parseInt($('exp').value, 10);
 
-      const dias     = $('dias').value ? clamp(parseInt($('dias').value, 10), 0, 30) : 0;
-      const horas    = $('horas').value ? clamp(parseInt($('horas').value, 10), 0, 23) : 0;
-      const minutos  = $('minutos').value ? clamp(parseInt($('minutos').value, 10), 0, 60) : 0;
+  const dias     = $('dias').value ? clamp(parseInt($('dias').value, 10), 0, 30) : 0;
+  const horas    = $('horas').value ? clamp(parseInt($('horas').value, 10), 0, 23) : 0;
+  const minutos  = $('minutos').value ? clamp(parseInt($('minutos').value, 10), 0, 60) : 0;
 
-      if(level===null || progreso===null || isNaN(exp)){
-        $('estado').textContent = 'Completa los campos obligatorios.';
-        return;
-      }
-      $('estado').textContent = '';
+  if(level===null || progreso===null || isNaN(exp)){
+    $('estado').textContent = 'Completa los campos obligatorios.';
+    return;
+  }
+  $('estado').textContent = '';
 
-      const totalSeconds = (dias||0)*86400 + (horas||0)*3600 + (minutos||0)*60;
-      const expBudgetN   = BigInt(Math.max(0, exp)) * BigInt(totalSeconds);
+  const totalSeconds = (dias||0)*86400 + (horas||0)*3600 + (minutos||0)*60;
+  const expBudgetN   = BigInt(Math.max(0, exp)) * BigInt(totalSeconds);
 
-      // EXP actual = total hasta nivel L + % del nivel L
-      const currentTotal = window.totalTo(level) + (window.need(level) * BigInt(progreso) / 100n);
+  const currentTotal = window.totalTo(level) + (window.need(level) * BigInt(progreso) / 100n);
+  const finalTotal   = currentTotal + expBudgetN;
 
-      const finalTotal   = currentTotal + expBudgetN;
+  const nivelFinal   = levelByTotalExp(finalTotal);
 
-      const nivelFinal   = levelByTotalExp(finalTotal);
-      // === % dentro del nivel final alcanzado ===
-      let porcentajeFinal = 100; // por defecto para el tope 1700
-      if (nivelFinal < 1700) {
-        // EXP ya acumulada dentro del nivel final
-        const expDentroNivel = finalTotal - window.totalTo(nivelFinal); // BigInt
+  let porcentajeFinal = 100;
+  if (nivelFinal < 1700) {
+    const expDentroNivel   = finalTotal - window.totalTo(nivelFinal);
+    const expNivelCompleto = window.need(nivelFinal);
+    const pctx100 = expNivelCompleto > 0n ? (expDentroNivel * 10000n) / expNivelCompleto : 0n;
+    porcentajeFinal = Number(pctx100) / 100;
+  }
 
-        // EXP total que requiere ese nivel para pasar al siguiente
-        const expNivelCompleto = window.need(nivelFinal); // BigInt (L → L+1)
+  $('resultado').textContent = `Vas a llegar al level ${nivelFinal} (${porcentajeFinal.toFixed(2)}%)`;
+  return nivelFinal;
+}
 
-        // porcentaje con 2 decimales: (expDentroNivel / expNivelCompleto) * 100
-        const pctx100 = expNivelCompleto > 0n ? (expDentroNivel * 10000n) / expNivelCompleto : 0n; // *100 con 2 decimales
-        porcentajeFinal = Number(pctx100) / 100; // convierte a número con 2 decimales
-      } else {
-        porcentajeFinal = 100;
-      }
+document.getElementById('form').addEventListener('submit', calcular);
 
-      // Mostrar resultado con % incluido
-      $('resultado').textContent = `Vas a llegar al level ${nivelFinal} (${porcentajeFinal.toFixed(2)}%)`;
-      return nivelFinal;
-    });
+// engancha el submit del formulario "por tiempo"
+document.getElementById('form').addEventListener('submit', calcular);
+
   }
 
   // iniciar
