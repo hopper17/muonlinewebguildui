@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guild REV3NGE</title>
+  <meta name="description" content="Guild REV3NGE" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img class="logo" src="assets/logoguild.png" alt="Guild REV3NGE" loading="lazy" />
+        <h1>GUILD REV3NGE</h1>
+      </div>
+
+      <nav class="menu" aria-label="Main navigation">
+        <a href="index.html">Inicio</a>
+        <!-- <a href="#descargas">Descargas</a> -->
+        <div class="dropdown">
+          <button type="button" aria-haspopup="true" aria-expanded="false">Mu GP
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <div class="dropdown-menu" role="menu">
+            <a href="#clases">Clases</a>
+            <a href="#ranking">Top Kill</a>
+            <a href="#noticias">Noticias</a>
+            <a href="calculadora.html">Calculadora EXP</a>
+          </div>
+        </div>
+        <!-- <a class="cta" href="#registrar">JUGAR AHORA</a> -->
+
+      </nav>
+
+      <button class="burger" id="openMobile" aria-label="Abrir menú">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+  </header>
+
+  <main id="inicio" class="hero">
+    <div class="container hero-grid">
+      <section>
+        <span class="badge">Guild PVP/PVM de Mu Online</span>
+        <h2 class="title">Bienvenido a <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">REV3NGE</span></h2>
+        <p class="subtitle">REV3NGE no es solo una guild, es una familia dentro del mundo de MU Online. Unidos por la pasión al juego y las batallas épicas, buscamos crecer juntos, conquistar eventos y dejar huella en cada servidor donde estemos presentes</p>
+        <p>Aquí encontrarás toda la información de nuestra comunidad:</p>
+      <ul>
+        <li>🔥 <strong>Eventos y actividades internas:</strong> torneos, retos y entrenamientos.</li>
+        <li>⚔️ <strong>Guías y estrategias</strong> para progresar más rápido y dominar las clases.</li>
+        <li>🛡️ <strong>Noticias de MU</strong> y actualizaciones de nuestro servidor.</li>
+        <li>🤝 <strong>Espacio para nuevos miembros:</strong> si compartes nuestro espíritu competitivo y de hermandad, este es tu lugar.</li>
+      </ul>
+      <p><em>Nuestra misión es simple: disfrutar del juego, apoyar a nuestros compañeros y alcanzar la gloria en conjunto.</em></p>
+      </section>
+      <aside class="art" aria-hidden="true">
+        <img src="assets/logoguild.png" alt="Logo REV3NGE" class="hero-logo" />
+      </aside>
+    </div>
+  </main>
+
+  <section id="clases" class="section">
+    <div class="container">
+      <h2 class="title" style="font-size:42px">Clases (última evolución)</h2>
+      <p class="subtitle">Selector interactivo con información de cada clase. Sustituye los textos por datos de tu servidor.</p>
+      <div class="classes" style="margin-top:18px">
+        <div class="left">
+          <div class="list" id="classList" role="listbox" aria-label="Lista de clases"></div>
+        </div>
+        <div class="right">
+          <div class="class-hero">
+            <h4 id="className">Blade Master</h4>
+            <p id="classDesc" class="muted">Guerrero cuerpo a cuerpo, excelente en PvE temprano y duelos. Se beneficia de velocidad de ataque y crítico.</p>
+          </div>
+          <div class="panel"><strong>Rol:</strong> <span id="classRole" class="muted">Melee / DPS</span></div>
+          <div class="panel"><strong>Recomendado para:</strong> <span id="classTips" class="muted">Principiantes que disfrutan combates directos.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!--   <section id="noticias" class="section" aria-labelledby="newsTitle">
+    <div class="container">
+      <h2 id="newsTitle" class="title" style="font-size:42px">Noticias</h2>
+      <div class="news">
+        <article>
+          <div class="thumb"></div>
+          <div class="body">
+            <strong>Actualización 1.0.3</strong>
+            <p class="muted">Balance de clases, drop ajustado y mejoras en Castle Siege.</p>
+          </div>
+        </article>
+        <article>
+          <div class="thumb"></div>
+          <div class="body">
+            <strong>Evento de fin de semana</strong>
+            <p class="muted">x2 experiencia, Bosses globales y cofres sorpresa en Lorencia.</p>
+          </div>
+        </article>
+        <article>
+          <div class="thumb"></div>
+          <div class="body">
+            <strong>Nuevo sistema VIP</strong>
+            <p class="muted">Tres niveles con recompensas únicas y misiones diarias.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section> -->
+
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px">
+      <div>
+        <strong>GUILD REV3NGE</strong>
+        <div class="muted">© 2025 – Powered by Hopper</div>
+      </div>
+      <div class="links">
+        <a href="#terminos">Términos</a>
+        <a href="#privacidad">Privacidad</a>
+        <a href="#soporte">Soporte</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const mobile = document.getElementById('mobile');
+    const openBtn = document.getElementById('openMobile');
+    const closeBtn = document.getElementById('closeMobile');
+    function toggleMobile(show){ mobile.style.display = show ? 'block' : 'none'; }
+
+
+    // Character selector (última evolución)
+    const classes = [
+      { name: 'Blade Master', role: 'Melee / DPS', tips: 'Ideal para progresión rápida y PvE.', desc: 'Guerrero cuerpo a cuerpo con gran daño sostenido.' },
+      { name: 'Grand Master', role: 'Mage / DPS', tips: 'Control de áreas y burst.', desc: 'Hechicero poderoso con gran daño elemental.' },
+      { name: 'High Elf', role: 'Support / DPS', tips: 'Apoyo al grupo y arquería.', desc: 'Arquera/Soporte con buffs y daño a distancia.' },
+      { name: 'Duel Master', role: 'Hybrid / DPS', tips: 'Muy fuerte en duelos.', desc: 'Domina armas y combos avanzados.' },
+      { name: 'Lord Emperor', role: 'Tank / Support', tips: 'Excelente en eventos de masas.', desc: 'Comandante con auras y gran supervivencia.' },
+      { name: 'Dimension Master', role: 'Mage / Control', tips: 'Despliegue de invocaciones.', desc: 'Mago de invocación con control del campo.' },
+      { name: 'Fist Master', role: 'Melee / DPS', tips: 'Movilidad y daño veloz.', desc: 'Maestro del puño con combos ágiles.' },
+      { name: 'Mirage Lancer', role: 'Melee / AoE', tips: 'Farmeo en área.', desc: 'Lancer con daño perforante y alcance.' },
+      { name: 'Rune Spell Master', role: 'Mage / Burst', tips: 'Especialista en runas.', desc: 'Magia rúnica con explosiones de daño.' },
+      { name: 'Royal Slayer', role: 'Assassin / DPS', tips: 'Crítico y evasión.', desc: 'Asesina veloz con doble arma.' }
+    ];
+
+    const list = document.getElementById('classList');
+    const nameEl = document.getElementById('className');
+    const descEl = document.getElementById('classDesc');
+    const roleEl = document.getElementById('classRole');
+    const tipsEl = document.getElementById('classTips');
+
+    classes.forEach((c, i)=>{
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.setAttribute('role','option');
+      item.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+      item.innerHTML = `<span>${c.name}</span><span class="tag">${c.role}</span>`;
+      item.addEventListener('click', ()=> selectClass(i));
+      list.appendChild(item);
+    });
+
+    function selectClass(index){
+      list.querySelectorAll('.item').forEach((el, idx)=> el.setAttribute('aria-selected', idx===index ? 'true' : 'false'));
+      const c = classes[index];
+      nameEl.textContent = c.name; descEl.textContent = c.desc; roleEl.textContent = c.role; tipsEl.textContent = c.tips;
+    }
+  </script>
+</body>
+</html>
