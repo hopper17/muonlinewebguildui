@@ -1,17 +1,170 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculadora MU — REV3NGE</title>
-  <meta name="description" content="Calculadora de tiempo para subir nivel en MU Online – Guild REV3NGE." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0f1115;
+      --panel: #131720;
+      --panel-2: #151a25;
+      --muted: #9aa0a6;
+      --text: #e6e6eb;
+      --brand-1: #7c4dff;
+      --brand-2: #22d3ee;
+      --accent: #6ea8fe;
+      --ok: #34d399;
+      --warn: #ffcc66;
+      --radius: 14px;
+      --shadow: 0 18px 50px rgba(0,0,0,.35), inset 0 1px rgba(255,255,255,.03);
+    }
+
+    /* Base */
+    * { box-sizing:border-box }
+    body {
+      margin:0;
+      font-family: system-ui, Inter, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(124,77,255,.12), transparent 40%),
+                  radial-gradient(1200px 600px at 100% 0%, rgba(34,211,238,.10), transparent 35%),
+                  var(--bg);
+      color: var(--text);
+      min-height:100dvh;
+    }
+
+    /* Contenedor */
+    .wrap {
+      max-width: 1040px;
+      margin: 48px auto 64px;
+      padding: 0 16px;
+    }
+
+    /* Título + subtítulo */
+    .page-head {
+      margin-bottom: 22px;
+      display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    }
+    h1 {
+      font-size: 32px;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing:.2px;
+    }
+    .spark {
+      display:inline-block; width:10px; height:10px; border-radius:50%;
+      background: linear-gradient(120deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 0 20px rgba(124,77,255,.8);
+    }
+    p.sub { color: var(--muted); margin: 6px 0 22px; max-width: 70ch; }
+
+    /* Badge de estado de datos */
+    .badge {
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 10px; border:1px solid rgba(255,255,255,.10);
+      border-radius:999px; font-size:12px; color:var(--muted);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), transparent);
+    }
+    .badge .dot {
+      width:8px; height:8px; border-radius:50%;
+      background: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245,158,11,.12);
+    }
+    .badge.ready .dot { background: var(--ok); box-shadow: 0 0 0 3px rgba(52,211,153,.15); }
+    .badge.error .dot { background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.15); }
+
+    /* Card del formulario */
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.015) 60%, transparent),
+                  var(--panel);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+    .card h2 {
+      font-size: 22px; margin:0 0 14px; font-weight:800;
+    }
+
+    /* Formulario */
+    form {
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:16px;
+    }
+    .field { grid-column: span 6; display:flex; flex-direction:column; gap:8px; }
+    .row-3 { grid-column: span 4; }
+
+    .field label { font-size:14px; color:#b6bcc6; }
+    .hint { font-size:12px; color:var(--muted) }
+
+    .input {
+      background: linear-gradient(180deg, var(--panel-2), #10141d);
+      border:1px solid #242a36;
+      border-radius: 12px;
+      padding:12px 14px;
+      color:#fff;
+      outline:none;
+      transition: border-color .2s, box-shadow .2s, transform .05s;
+    }
+    .input:hover { border-color:#2f3747 }
+    .input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(110,168,254,.15);
+    }
+    .input[aria-invalid="true"] {
+      border-color:#ef4444;
+      box-shadow: 0 0 0 3px rgba(239,68,68,.2);
+    }
+
+    /* Acciones */
+    .actions { grid-column: 1 / -1; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .btn {
+      background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+      border:none; padding:12px 18px; border-radius:12px;
+      color:#061020; font-weight:800; letter-spacing:.2px; cursor:pointer;
+      box-shadow: 0 14px 34px rgba(124,77,255,.25);
+      transition: transform .06s ease, filter .15s ease;
+    }
+    .btn:hover { filter: brightness(1.08) saturate(1.1); }
+    .btn:active { transform: translateY(1px) }
+    .btn:disabled { opacity:.6; cursor:not-allowed; }
+
+    .muted { color:var(--muted); font-size:14px; }
+    #estado { color: var(--warn); font-size:14px; }
+
+    /* Resultado */
+    .result {
+      margin-top: 16px;
+      padding: 16px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+      display:none;
+    }
+    .result h3 { margin:0 0 6px; font-size:16px; color:var(--muted); font-weight:600 }
+    .level {
+      font-size: 40px; line-height:1; font-weight:900; letter-spacing:.4px;
+      background: linear-gradient(90deg, #fff, #d1eaff);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+      text-shadow: 0 8px 28px rgba(110,168,254,.15);
+    }
+
+    /* Responsive */
+    @media (max-width: 780px){
+      .field, .row-3 { grid-column: span 12; }
+      .wrap { margin: 32px auto 56px; }
+      h1 { font-size: 28px; }
+    }
+  </style>
 </head>
 <body>
-  <!-- ===== HEADER (igual al index) ===== -->
   <header>
     <div class="container nav">
       <div class="brand">
@@ -21,92 +174,169 @@
 
       <nav class="menu" aria-label="Main navigation">
         <a href="index.html">Inicio</a>
+        <!-- <a href="#descargas">Descargas</a> -->
         <div class="dropdown">
-          <button type="button" aria-haspopup="true" aria-expanded="true">Mu GP
+          <button type="button" aria-haspopup="true" aria-expanded="false">Mu GP
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
-          <div class="dropdown-menu" role="menu" style="display:block">
-            <a href="clases.html">Clases</a>
-            <a href="ranking.html">Top Kill</a>
-            <a href="noticias.html">Noticias</a>
-            <a class="active" href="calculadora.html">Calculadora EXP</a>
+          <div class="dropdown-menu" role="menu">
+            <a href="#clases">Clases</a>
+            <a href="#ranking">Top Kill</a>
+            <a href="#noticias">Noticias</a>
+            <a href="calculadora.html">Calculadora EXP</a>
           </div>
         </div>
+        <!-- <a class="cta" href="#registrar">JUGAR AHORA</a> -->
+
       </nav>
 
       <button class="burger" id="openMobile" aria-label="Abrir menú">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
     </div>
+
   </header>
-
-  <!-- ===== MAIN (estilo y grid del index) ===== -->
-  <main class="section">
-    <div class="container hero-grid" style="align-items:flex-start">
-      <section style="display:grid; gap:14px">
-        <span class="badge">Herramientas • Calculadora de EXP</span>
-        <h2 class="title">Calculadora de <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Experiencia</span></h2>
-        <p class="subtitle" style="max-width:70ch">
-          Ingresa tu <strong>level actual</strong>, el <strong>% de progreso</strong> (Ctrl+F en el juego), tu <strong>EXP por segundo</strong> y el tiempo objetivo.
-          <br>El resultado te dirá a qué <strong>nivel</strong> llegarás.
-          <span id="dataState" class="badge" style="margin-left:8px;">Cargando datos…</span>
-        </p>
-
-        <!-- Card del formulario (mantiene IDs y funcionalidad) -->
-        <div class="panel" style="padding:20px; display:grid; gap:14px">
-          <h3 class="title" style="font-size:22px">Datos de cálculo</h3>
-
-          <form id="form" style="display:grid; grid-template-columns:repeat(12,1fr); gap:14px">
-            <label class="panel" style="grid-column:span 6; padding:12px">
-              <span class="muted">1 - Level Actual</span>
-              <input id="level" class="input" type="number" min="1" max="1700" placeholder="1–1700" required>
-            </label>
-
-            <label class="panel" style="grid-column:span 6; padding:12px">
-              <span class="muted">2 - % de progreso de Level <span class="muted" style="opacity:.8">(Valor de Ctrl+F)</span></span>
-              <input id="progreso" class="input" type="number" min="0" max="100" placeholder="0–100" required>
-            </label>
-
-            <label class="panel" style="grid-column:span 12; padding:12px">
-              <span class="muted">3 - Experiencia por segundo</span>
-              <input id="exp" class="input" type="number" min="0" step="1" placeholder="p. ej. 6000000" required>
-            </label>
-
-            <label class="panel" style="grid-column:span 4; padding:12px">
-              <span class="muted">4 - Días</span>
-              <input id="dias" class="input" type="number" min="0" max="30" placeholder="0–30">
-            </label>
-            <label class="panel" style="grid-column:span 4; padding:12px">
-              <span class="muted">5 - Horas</span>
-              <input id="horas" class="input" type="number" min="0" max="23" placeholder="0–23">
-            </label>
-            <label class="panel" style="grid-column:span 4; padding:12px">
-              <span class="muted">6 - Minutos</span>
-              <input id="minutos" class="input" type="number" min="0" max="60" placeholder="0–60">
-            </label>
-
-            <div style="grid-column:1/-1; display:flex; align-items:center; gap:12px">
-              <button id="btn" type="submit" class="btn" disabled>Calcular</button>
-              <span id="estado" class="muted"></span>
-            </div>
-          </form>
-
-          <!-- Resultado (tu JS escribe aquí) -->
-          <div id="resultado" class="panel" role="status" aria-live="polite" style="display:none; padding:16px">
-            <strong class="muted">Resultado</strong>
-            <div id="resultadoLevel" class="title" style="font-size:40px; margin-top:6px">—</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Arte/lateral como en el index -->
-      <aside class="art" aria-hidden="true">
-        <img src="assets/logoguild.png" alt="Logo REV3NGE" class="hero-logo" />
-      </aside>
+  <div class="wrap">
+    <div class="page-head">
+      <span class="spark" aria-hidden="true"></span>
+      <h1>Calculadora de nivel</h1>
     </div>
-  </main>
+    <p class="sub">
+      Calcula hasta qué <b>nivel</b> llegarás con tu EXP/s y tiempo.
+      <span id="dataState" class="badge"><span class="dot"></span> Cargando datos…</span>
+    </p>
 
-  <!-- ===== FOOTER (igual al index) ===== -->
+    <!-- Card visual: no cambia la lógica -->
+    <section class="card" aria-label="Datos para el cálculo">
+      <h2>Datos de cálculo</h2>
+
+      <form id="form">
+        <div class="field">
+          <label for="level">1 - Level Actual</label>
+          <input id="level" class="input" type="number" min="1" max="1700" placeholder="1–1700" required aria-invalid="false">
+          <small class="hint">Rango permitido: 1 a 1700.</small>
+        </div>
+
+        <div class="field">
+          <label for="progreso">2 - % de progreso de Level <span class="hint">(Valor de Ctrl+F en el juego)</span></label>
+          <input id="progreso" class="input" type="number" min="0" max="100" placeholder="0–100" required aria-invalid="false">
+        </div>
+
+        <div class="field">
+          <label for="exp">3 - Experiencia por segundo</label>
+          <input id="exp" class="input" type="number" min="0" step="1" placeholder="p. ej. 6000000" required aria-invalid="false">
+        </div>
+
+        <div class="field row-3">
+          <label for="dias">4 - Días</label>
+          <input id="dias" class="input" type="number" min="0" max="30" placeholder="0–30" aria-invalid="false">
+        </div>
+        <div class="field row-3">
+          <label for="horas">5 - Horas</label>
+          <input id="horas" class="input" type="number" min="0" max="23" placeholder="0–23" aria-invalid="false">
+        </div>
+        <div class="field row-3">
+          <label for="minutos">6 - Minutos</label>
+          <input id="minutos" class="input" type="number" min="0" max="60" placeholder="0–60" aria-invalid="false">
+        </div>
+
+        <div class="actions">
+          <button id="btn" type="submit" class="btn" disabled>Calcular</button>
+          <span id="estado" class="muted"></span>
+        </div>
+      </form>
+
+      <!-- Resultado (solo visual; tu JS escribe aquí como antes) -->
+      <div id="resultado" class="result" role="status" aria-live="polite">
+        <h3>Vas a llegar al level</h3>
+        <div class="level" id="resultadoLevel">—</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SIN imports ES: primero datos, luego lógica (respeto el orden y nombres) -->
+  <script src="data_exp.js"></script>
+  <script src="calculadora.js"></script>
+
+  <!-- Pequeños ganchos visuales sin cambiar tu lógica -->
+  <script>
+    // Marcar “datos listos” cuando data_exp exponga NEED/TOTAL
+(function watchData(){
+    const badge = document.getElementById('dataState');
+    const btn   = document.getElementById('btn');
+
+    // Cuando los arrays estén listos
+    if (window.NEED && window.TOTAL){
+      // habilita el botón si existe
+      if (btn) btn.removeAttribute('disabled');
+
+      // si hay badge, lo marcamos como "listo" con defensas
+      if (badge){
+        badge.classList.add('ready');
+
+        // asegura que exista el puntito .dot
+        let dot = badge.querySelector('.dot');
+        if (!dot){
+          dot = document.createElement('span');
+          dot.className = 'dot';
+          // lo ponemos al inicio sin borrar el texto actual
+          badge.prepend(dot);
+        }
+        // estiliza el punto solo si existe style
+        if (dot && dot.style){
+          dot.style.background = 'var(--ok)';
+          dot.style.boxShadow  = '0 0 0 3px rgba(52,211,153,.15)';
+        }
+
+        // texto del badge
+        if (!/Datos listos/i.test(badge.textContent || '')){
+          // conserva el dot y cambia el texto sin borrar el nodo
+          const txt = document.createTextNode(' Datos listos');
+          // si ya había nodos de texto, reemplázalos suavemente
+          // borramos solo textos sueltos, mantenemos el .dot
+          [...badge.childNodes].forEach(n=>{
+            if(n.nodeType===3) badge.removeChild(n);
+          });
+          badge.appendChild(txt);
+        }
+      }
+      return; // fin
+    }
+
+    // Reintenta si aún no están los datos
+    setTimeout(watchData, 120);
+  })();
+
+    // Mostrar el bloque estilizado cuando exista texto en #resultado
+    (function mountResultObserver(){
+      const res = document.getElementById('resultado');
+      const target = document.getElementById('resultado');
+      const levelText = document.getElementById('resultadoLevel');
+
+      // Tu JS escribe en #resultado (innerText). Reflejo visual sin tocar tu cálculo.
+      const obs = new MutationObserver(() => {
+        const txt = target.textContent.trim();
+        if (txt) {
+          res.style.display = 'block';
+          // Si tu texto es “Vas a llegar al level 1649”, extraigo el número para grande
+          const match = txt.match(/level\\s+(\\d+)/i);
+          levelText.textContent = match ? match[1] : '—';
+        }
+      });
+      obs.observe(target, { childList: true, characterData: true, subtree: true });
+    })();
+
+    // Validación ligera solo visual (no afecta tu cálculo)
+    ['level','progreso','exp','dias','horas','minutos'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener('input', () => {
+        if (el.checkValidity()) el.setAttribute('aria-invalid','false');
+        else el.setAttribute('aria-invalid','true');
+      });
+    });
+  </script>
+</body>
   <footer>
     <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px">
       <div>
@@ -120,47 +350,4 @@
       </div>
     </div>
   </footer>
-
-  <!-- ===== SCRIPTS (mismo orden de tu calculadora actual) ===== -->
-  <script src="data_exp.js"></script>
-  <script src="calculadora.js"></script>
-
-  <!-- Pequeños ganchos visuales (no cambian tu lógica) -->
-  <script>
-    // Marca “datos listos” y habilita botón cuando existan NEED/TOTAL
-    (function watchData(){
-      const badge = document.getElementById('dataState');
-      const btn   = document.getElementById('btn');
-
-      if (window.NEED && window.TOTAL){
-        if (btn) btn.removeAttribute('disabled');
-        if (badge){
-          badge.classList.add('ready');
-          let dot = badge.querySelector('.dot');
-          if (!dot){ dot = document.createElement('span'); dot.className='dot'; badge.prepend(dot); }
-          dot.style.background='var(--ok)';
-          dot.style.boxShadow='0 0 0 3px rgba(52,211,153,.15)';
-          [...badge.childNodes].forEach(n=>{ if(n.nodeType===3) badge.removeChild(n); });
-          badge.appendChild(document.createTextNode(' Datos listos'));
-        }
-        return;
-      }
-      setTimeout(watchData, 120);
-    })();
-
-    // Refleja el número grande cuando tu JS escriba en #resultado
-    (function mountResultObserver(){
-      const box = document.getElementById('resultado');
-      const big = document.getElementById('resultadoLevel');
-      const obs = new MutationObserver(()=>{
-        const txt = box.textContent.trim();
-        if (!txt) return;
-        box.style.display='block';
-        const m = txt.match(/level\s+(\d+)/i);
-        big.textContent = m ? m[1] : '—';
-      });
-      obs.observe(document.getElementById('resultado'), {childList:true,subtree:true,characterData:true});
-    })();
-  </script>
-</body>
 </html>
