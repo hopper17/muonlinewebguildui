@@ -436,6 +436,8 @@ function updateProgressChartNivel(fromLevel, fromProgress, toLevel, toProgress, 
   // Calcular tiempo total en segundos
   const totalSeconds = (timeData.d || 0) * 86400 + (timeData.h || 0) * 3600 + (timeData.m || 0) * 60 + (timeData.s || 0);
   
+  console.log('Gráfico - Tiempo total:', timeData, 'Segundos:', totalSeconds);
+  
   // Calcular EXP total necesaria
   const totalAtStart = (fromLevel > 1) ? window.totalTo(fromLevel - 1) : 0n;
   const progressInLevel = (window.need(fromLevel) * BigInt(fromProgress)) / 100n;
@@ -446,7 +448,9 @@ function updateProgressChartNivel(fromLevel, fromProgress, toLevel, toProgress, 
   
   const totalExpNeeded = finalTotal - currentTotal;
   
-  // Calcular puntos intermedios - CORREGIDO para progresión lineal
+  console.log('Gráfico - EXP necesaria:', totalExpNeeded.toString());
+  
+  // Calcular puntos intermedios
   const points = [];
   const labels = [];
   const steps = Math.min(20, Math.max(5, Math.floor((toLevel - fromLevel) / 2)));
@@ -457,16 +461,29 @@ function updateProgressChartNivel(fromLevel, fromProgress, toLevel, toProgress, 
     // Calcular EXP en este punto
     const expAtPoint = currentTotal + (totalExpNeeded * BigInt(Math.floor(progress * 1000))) / 1000n;
     
-    // Encontrar nivel correspondiente a esta EXP
+    // Encontrar nivel correspondiente a esta EXP - CORREGIDO
     let levelAtPoint = fromLevel;
-    let expForLevel = totalAtStart + progressInLevel;
     
-    // Buscar el nivel correcto
-    while(levelAtPoint < toLevel && expForLevel < expAtPoint){
-      levelAtPoint++;
+    // Buscar el nivel correcto iterando desde fromLevel
+    while(levelAtPoint < toLevel){
       const levelStart = (levelAtPoint > 1) ? window.totalTo(levelAtPoint - 1) : 0n;
-      expForLevel = levelStart + window.need(levelAtPoint);
+      const levelEnd = levelStart + window.need(levelAtPoint);
+      
+      // Si la EXP está dentro de este nivel, lo encontramos
+      if(expAtPoint >= levelStart && expAtPoint < levelEnd){
+        break;
+      }
+      
+      // Si la EXP es mayor o igual al final de este nivel, seguir al siguiente
+      if(expAtPoint >= levelEnd){
+        levelAtPoint++;
+      } else {
+        break;
+      }
     }
+    
+    // Asegurar que no excedemos el nivel objetivo
+    if(levelAtPoint > toLevel) levelAtPoint = toLevel;
     
     // Calcular progreso dentro del nivel
     const levelStart = (levelAtPoint > 1) ? window.totalTo(levelAtPoint - 1) : 0n;

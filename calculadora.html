@@ -589,6 +589,8 @@ function calcularNivel(e){
     const h = Math.floor(seconds / 3600);  seconds %= 3600;
     const m = Math.floor(seconds / 60);    const s = Math.floor(seconds % 60);
 
+    console.log('calcularNivel - Tiempo calculado:', {d, h, m, s}, 'Total segundos:', Number(secTot));
+
     out.innerHTML = `
       <div><strong>Tiempo necesario:</strong></div>
       <div class="title" style="font-size:28px; margin-top:4px">${d}d ${h}h ${m}m ${s}s</div>
