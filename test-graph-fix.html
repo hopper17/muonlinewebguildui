@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Test - Fix del Gráfico</title>
+  <style>
+    body {
+      font-family: system-ui;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #0f1115;
+      color: #e6e6eb;
+    }
+    .test-case {
+      background: #131720;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .result {
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(52,211,153,.1);
+      border-left: 3px solid #34d399;
+      border-radius: 4px;
+    }
+    .error {
+      background: rgba(239,68,68,.1);
+      border-left-color: #ef4444;
+    }
+    code {
+      background: rgba(255,255,255,.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    h1 { color: #1ad1ff; }
+    h2 { font-size: 18px; margin-top: 0; }
+  </style>
+</head>
+<body>
+  <h1>🧪 Verificación del Fix del Gráfico</h1>
+  <p>Esta página verifica que el algoritmo del gráfico garantiza progresión monotónica (nunca baja de nivel).</p>
+
+  <div class="test-case">
+    <h2>Test 1: Caso Reportado (1678 → 1700)</h2>
+    <p>Este es el caso que mostraba el bug original.</p>
+    <div id="test1" class="result">Ejecutando...</div>
+  </div>
+
+  <div class="test-case">
+    <h2>Test 2: Rango Grande (1 → 1700)</h2>
+    <p>Verifica que funciona en todo el rango del juego.</p>
+    <div id="test2" class="result">Ejecutando...</div>
+  </div>
+
+  <div class="test-case">
+    <h2>Test 3: Rango Pequeño (100 → 105)</h2>
+    <p>Verifica que funciona con diferencias pequeñas.</p>
+    <div id="test3" class="result">Ejecutando...</div>
+  </div>
+
+  <div class="test-case">
+    <h2>Test 4: Con Progreso Inicial (500 75% → 600)</h2>
+    <p>Verifica que el progreso inicial se considera correctamente.</p>
+    <div id="test4" class="result">Ejecutando...</div>
+  </div>
+
+  <script src="data_exp.js"></script>
+  <script>
+    // Función simplificada de levelByTotalExp (copiada de calculadora.js)
+    function levelByTotalExp(expTotal){
+      let lo = 1, hi = 1700, ans = 1;
+      while(lo <= hi){
+        const mid = (lo + hi) >> 1;
+        const totalAtStart = (mid > 1) ? window.totalTo(mid - 1) : 0n;
+        if (totalAtStart <= expTotal){
+          ans = mid;
+          lo = mid + 1;
+        } else {
+          hi = mid - 1;
+        }
+      }
+      return ans;
+    }
+
+    // Función de test que simula el algoritmo del gráfico
+    function testGraphProgression(fromLevel, fromProgress, toLevel) {
+      const totalAtStart = (fromLevel > 1) ? window.totalTo(fromLevel - 1) : 0n;
+      const progressInLevel = (window.need(fromLevel) * BigInt(fromProgress)) / 100n;
+      const currentTotal = totalAtStart + progressInLevel;
+      
+      const totalAtFinalStart = (toLevel > 1) ? window.totalTo(toLevel - 1) : 0n;
+      const finalTotal = totalAtFinalStart;
+      
+      const totalExpNeeded = finalTotal - currentTotal;
+      
+      // Simular 20 puntos del gráfico
+      const steps = 20;
+      const points = [];
+      let hasError = false;
+      let errorMsg = '';
+      
+      for(let i = 0; i <= steps; i++){
+        const progress = i / steps;
+        
+        // Algoritmo CORRECTO: calcular EXP primero, luego nivel
+        const expAtPoint = currentTotal + (totalExpNeeded * BigInt(Math.floor(progress * 1000))) / 1000n;
+        const levelAtPoint = levelByTotalExp(expAtPoint);
+        
+        // Calcular progreso dentro del nivel
+        const levelStart = (levelAtPoint > 1) ? window.totalTo(levelAtPoint - 1) : 0n;
+        const expInLevel = expAtPoint - levelStart;
+        const needForLevel = window.need(levelAtPoint);
+        const progressInCurrentLevel = needForLevel > 0n ? Number((expInLevel * 10000n) / needForLevel) / 100 : 0;
+        
+        const levelWithProgress = levelAtPoint + (progressInCurrentLevel / 100);
+        points.push(levelWithProgress);
+        
+        // Verificar que nunca baja
+        if (i > 0 && levelWithProgress < points[i-1]) {
+          hasError = true;
+          errorMsg = `❌ ERROR: Nivel bajó de ${points[i-1].toFixed(2)} a ${levelWithProgress.toFixed(2)} en paso ${i}`;
+          break;
+        }
+      }
+      
+      return {
+        success: !hasError,
+        points: points,
+        message: hasError ? errorMsg : `✅ CORRECTO: Progresión monotónica verificada (${points.length} puntos, ${points[0].toFixed(1)} → ${points[points.length-1].toFixed(1)})`
+      };
+    }
+
+    // Esperar a que los datos estén listos
+    window.expDataReady.then(() => {
+      // Test 1: Caso reportado
+      const test1 = testGraphProgression(1678, 0, 1700);
+      document.getElementById('test1').innerHTML = test1.message;
+      document.getElementById('test1').className = test1.success ? 'result' : 'result error';
+
+      // Test 2: Rango grande
+      const test2 = testGraphProgression(1, 0, 1700);
+      document.getElementById('test2').innerHTML = test2.message;
+      document.getElementById('test2').className = test2.success ? 'result' : 'result error';
+
+      // Test 3: Rango pequeño
+      const test3 = testGraphProgression(100, 0, 105);
+      document.getElementById('test3').innerHTML = test3.message;
+      document.getElementById('test3').className = test3.success ? 'result' : 'result error';
+
+      // Test 4: Con progreso inicial
+      const test4 = testGraphProgression(500, 75, 600);
+      document.getElementById('test4').innerHTML = test4.message;
+      document.getElementById('test4').className = test4.success ? 'result' : 'result error';
+
+      // Resumen
+      const allPassed = test1.success && test2.success && test3.success && test4.success;
+      if (allPassed) {
+        document.body.insertAdjacentHTML('beforeend', `
+          <div class="test-case" style="background: rgba(52,211,153,.1); border-color: #34d399;">
+            <h2>✅ Todos los tests pasaron</h2>
+            <p>El algoritmo del gráfico está funcionando correctamente y garantiza progresión monotónica.</p>
+          </div>
+        `);
+      }
+    }).catch(err => {
+      document.body.innerHTML = '<div class="result error">Error cargando datos de experiencia: ' + err + '</div>';
+    });
+  </script>
+</body>
+</html>

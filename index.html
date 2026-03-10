@@ -3,19 +3,62 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Guild REV3NGE</title>
-  <meta name="description" content="Guild REV3NGE" />
+  <title>Guild ADICCION - MU Online | PVP/PVM Guild</title>
+  <meta name="description" content="ADICCION es una guild de élite en MU Online dedicada al PVP y PVM. Únete a nuestra familia de guerreros y conquista el mundo de MU." />
+  <meta name="keywords" content="MU Online, Guild ADICCION, PVP, PVM, MMORPG, Guild Wars, Castle Siege" />
+  <meta name="author" content="Guild ADICCION" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://muonlinewebguildui.vercel.app/" />
+  <meta property="og:title" content="Guild ADICCION - MU Online" />
+  <meta property="og:description" content="Únete a ADICCION, la guild de élite en MU Online. PVP, PVM y conquistas épicas." />
+  <meta property="og:image" content="https://muonlinewebguildui.vercel.app/assets/logoguild.png" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://muonlinewebguildui.vercel.app/" />
+  <meta property="twitter:title" content="Guild ADICCION - MU Online" />
+  <meta property="twitter:description" content="Únete a ADICCION, la guild de élite en MU Online. PVP, PVM y conquistas épicas." />
+  <meta property="twitter:image" content="https://muonlinewebguildui.vercel.app/assets/logoguild.png" />
+  
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#1ad1ff" />
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Guild ADICCION",
+    "description": "Guild de élite en MU Online dedicada al PVP y PVM",
+    "url": "https://muonlinewebguildui.vercel.app/",
+    "logo": "https://muonlinewebguildui.vercel.app/assets/logoguild.png",
+    "sameAs": [
+      "https://discord.gg/adiccion",
+      "https://twitter.com/adiccion",
+      "https://facebook.com/adiccion"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Recruitment",
+      "availableLanguage": ["Spanish", "Portuguese"]
+    }
+  }
+  </script>
 </head>
 <body>
   <header>
     <div class="container nav">
       <div class="brand">
-        <img class="logo" src="assets/logoguild.png" alt="Guild REV3NGE" loading="lazy" />
-        <h1>GUILD REV3NGE</h1>
+        <img class="logo" src="assets/logoguild.png" alt="Guild ADICCION" loading="lazy" />
+        <h1>GUILD ADICCION</h1>
       </div>
 
       <nav class="menu" aria-label="Main navigation">
@@ -32,6 +75,15 @@
             <a href="calculadora.html">Calculadora EXP</a>
           </div>
         </div>
+        
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+          <div class="theme-toggle-slider">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </div>
+        </button>
         <!-- <a class="cta" href="#registrar">JUGAR AHORA</a> -->
 
       </nav>
@@ -41,14 +93,32 @@
       </button>
     </div>
 
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile" style="display:none">
+      <div class="mobile-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px">
+          <strong>GUILD ADICCION</strong>
+          <button id="closeMobile" style="background:transparent; border:0; color:var(--txt); cursor:pointer" aria-label="Cerrar menú">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <nav style="display:flex; flex-direction:column; gap:8px">
+          <a href="index.html" class="mobile-link">Inicio</a>
+          <a href="#clases" class="mobile-link">Clases</a>
+          <a href="#ranking" class="mobile-link">Top Kill</a>
+          <a href="#reclutamiento" class="mobile-link">Únete</a>
+          <a href="calculadora.html" class="mobile-link">Calculadora EXP</a>
+        </nav>
+      </div>
+    </div>
   </header>
 
   <main id="inicio" class="hero">
     <div class="container hero-grid">
       <section>
         <span class="badge">Guild PVP/PVM de Mu Online</span>
-        <h2 class="title">Bienvenido a <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">REV3NGE</span></h2>
-        <p class="subtitle">REV3NGE no es solo una guild, es una familia dentro del mundo de MU Online. Unidos por la pasión al juego y las batallas épicas, buscamos crecer juntos, conquistar eventos y dejar huella en cada servidor donde estemos presentes</p>
+        <h2 class="title">Bienvenido a <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">ADICCION</span></h2>
+        <p class="subtitle">ADICCION no es solo una guild, es una familia dentro del mundo de MU Online. Unidos por la pasión al juego y las batallas épicas, buscamos crecer juntos, conquistar eventos y dejar huella en cada servidor donde estemos presentes</p>
         <p>Aquí encontrarás toda la información de nuestra comunidad:</p>
       <ul>
         <li>🔥 <strong>Eventos y actividades internas:</strong> torneos, retos y entrenamientos.</li>
@@ -59,7 +129,7 @@
       <p><em>Nuestra misión es simple: disfrutar del juego, apoyar a nuestros compañeros y alcanzar la gloria en conjunto.</em></p>
       </section>
       <aside class="art" aria-hidden="true">
-        <img src="assets/logoguild.png" alt="Logo REV3NGE" class="hero-logo" />
+        <img src="assets/logoguild.png" alt="Logo ADICCION" class="hero-logo" />
       </aside>
     </div>
   </main>
@@ -79,6 +149,115 @@
           </div>
           <div class="panel"><strong>Rol:</strong> <span id="classRole" class="muted">Melee / DPS</span></div>
           <div class="panel"><strong>Recomendado para:</strong> <span id="classTips" class="muted">Principiantes que disfrutan combates directos.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="miembros" class="section">
+    <div class="container">
+      <h2 class="title" style="font-size:42px; text-align:center">Miembros Destacados</h2>
+      <p class="subtitle" style="text-align:center; margin:0 auto 32px">Los guerreros que lideran nuestra guild hacia la gloria</p>
+      
+      <div class="grid-3">
+        <div class="card member-card">
+          <div class="member-avatar" style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, var(--brand-1), var(--brand-2)); margin:0 auto 12px"></div>
+          <h3 style="text-align:center; margin:0 0 4px">Guild Master</h3>
+          <p class="muted" style="text-align:center; font-size:14px; margin:0 0 8px">Blade Master • Lvl 1650</p>
+          <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap">
+            <span class="tag">Líder</span>
+            <span class="tag">PVP</span>
+          </div>
+        </div>
+        
+        <div class="card member-card">
+          <div class="member-avatar" style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, #00ffa5, var(--brand-1)); margin:0 auto 12px"></div>
+          <h3 style="text-align:center; margin:0 0 4px">Vice Master</h3>
+          <p class="muted" style="text-align:center; font-size:14px; margin:0 0 8px">Grand Master • Lvl 1620</p>
+          <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap">
+            <span class="tag">Estratega</span>
+            <span class="tag">PVM</span>
+          </div>
+        </div>
+        
+        <div class="card member-card">
+          <div class="member-avatar" style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, var(--brand-2), #ff6b9d); margin:0 auto 12px"></div>
+          <h3 style="text-align:center; margin:0 0 4px">Top Killer</h3>
+          <p class="muted" style="text-align:center; font-size:14px; margin:0 0 8px">Duel Master • Lvl 1680</p>
+          <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap">
+            <span class="tag">Asesino</span>
+            <span class="tag">MVP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:linear-gradient(180deg, transparent, rgba(26,209,255,.03))">
+    <div class="container">
+      <h2 class="title" style="font-size:42px; text-align:center">Nuestros Logros</h2>
+      <div class="grid-3" style="margin-top:32px">
+        <div class="panel" style="text-align:center; padding:24px">
+          <div style="font-size:48px; font-weight:900; background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent; margin-bottom:8px">50+</div>
+          <strong>Miembros Activos</strong>
+          <p class="muted" style="margin:4px 0 0; font-size:14px">Comunidad en crecimiento</p>
+        </div>
+        
+        <div class="panel" style="text-align:center; padding:24px">
+          <div style="font-size:48px; font-weight:900; background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent; margin-bottom:8px">15</div>
+          <strong>Castle Siege Ganados</strong>
+          <p class="muted" style="margin:4px 0 0; font-size:14px">Dominación total</p>
+        </div>
+        
+        <div class="panel" style="text-align:center; padding:24px">
+          <div style="font-size:48px; font-weight:900; background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent; margin-bottom:8px">#1</div>
+          <strong>Ranking del Servidor</strong>
+          <p class="muted" style="margin:4px 0 0; font-size:14px">Los mejores del server</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reclutamiento" class="section" style="background:linear-gradient(180deg, rgba(26,209,255,.03), transparent)">
+    <div class="container">
+      <h2 class="title" style="font-size:42px; text-align:center">Únete a <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">ADICCION</span></h2>
+      <p class="subtitle" style="text-align:center; margin:0 auto 32px; max-width:60ch">¿Listo para formar parte de nuestra familia? Completa el formulario y nos pondremos en contacto contigo.</p>
+      
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; max-width:1000px; margin:0 auto">
+        <div class="panel" style="padding:28px">
+          <h3 style="margin:0 0 16px; font-size:22px">Requisitos</h3>
+          <ul style="color:var(--muted); line-height:1.8; padding-left:20px">
+            <li>Nivel mínimo: 400+</li>
+            <li>Activo al menos 3 días por semana</li>
+            <li>Discord obligatorio</li>
+            <li>Respetar las reglas del guild</li>
+            <li>Participar en eventos principales</li>
+            <li>Actitud positiva y trabajo en equipo</li>
+          </ul>
+        </div>
+
+        <div class="panel" style="padding:28px">
+          <h3 style="margin:0 0 16px; font-size:22px">Formulario de Ingreso</h3>
+          <form id="recruitForm" style="display:flex; flex-direction:column; gap:14px">
+            <input class="input" type="text" placeholder="Nombre del personaje" required>
+            <input class="input" type="number" placeholder="Nivel" min="1" max="1700" required>
+            <select class="input" required>
+              <option value="">Selecciona tu clase</option>
+              <option>Blade Master</option>
+              <option>Grand Master</option>
+              <option>High Elf</option>
+              <option>Duel Master</option>
+              <option>Lord Emperor</option>
+              <option>Dimension Master</option>
+              <option>Fist Master</option>
+              <option>Mirage Lancer</option>
+              <option>Rune Spell Master</option>
+              <option>Royal Slayer</option>
+            </select>
+            <input class="input" type="text" placeholder="Discord (usuario#0000)" required>
+            <textarea class="input" placeholder="¿Por qué quieres unirte a ADICCION?" rows="3" required></textarea>
+            <button type="submit" class="btn btn-primary" style="width:100%">Enviar Solicitud</button>
+          </form>
         </div>
       </div>
     </div>
@@ -113,26 +292,216 @@
     </div>
   </section> -->
 
-  <footer>
-    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px">
-      <div>
-        <strong>GUILD REV3NGE</strong>
-        <div class="muted">© 2025 – By Hopper</div>
+  <section class="section" style="background:var(--panel)">
+    <div class="container">
+      <h2 class="title" style="font-size:42px; text-align:center">Únete a Nuestra Comunidad</h2>
+      <p class="subtitle" style="text-align:center; margin:0 auto 32px">Conéctate con nosotros en Discord y redes sociales</p>
+      
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:900px; margin:0 auto">
+        <div class="panel" style="padding:32px; text-align:center">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" style="margin:0 auto 16px">
+            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" fill="currentColor"/>
+          </svg>
+          <h3 style="margin:0 0 8px">Discord</h3>
+          <p class="muted" style="margin:0 0 16px; font-size:14px">Únete a nuestro servidor oficial</p>
+          <a href="#" class="btn btn-primary" style="display:inline-block">Unirse al Discord</a>
+        </div>
+        
+        <div class="panel" style="padding:32px">
+          <h3 style="margin:0 0 16px; text-align:center">Síguenos</h3>
+          <div style="display:flex; flex-direction:column; gap:12px">
+            <a href="#" class="social-link panel" style="padding:12px; display:flex; align-items:center; gap:12px; transition:background .2s">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.85.38-1.78.64-2.75.76a4.8 4.8 0 0 0 2.1-2.66c-.93.55-1.95.95-3.04 1.17A4.76 4.76 0 0 0 11.77 9c-2.65 0-4.8-2.15-4.8-4.8c0-.37.04-.74.12-1.1A13.6 13.6 0 0 1 16.88 2c.85.38 1.78.64 2.75.76a4.8 4.8 0 0 0-2.1 2.66c.93-.55 1.95-.95 3.04-1.17z"/></svg>
+              <span>Twitter / X</span>
+            </a>
+            <a href="#" class="social-link panel" style="padding:12px; display:flex; align-items:center; gap:12px; transition:background .2s">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02c0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89c1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"/></svg>
+              <span>Facebook</span>
+            </a>
+            <a href="#" class="social-link panel" style="padding:12px; display:flex; align-items:center; gap:12px; transition:background .2s">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3z"/></svg>
+              <span>Instagram</span>
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="links">
-        <a href="#terminos">Términos</a>
-        <a href="#privacidad">Privacidad</a>
-        <a href="#soporte">Soporte</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:32px; padding:32px 0">
+      <div>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
+          <img src="assets/logoguild.png" alt="ADICCION" style="width:32px; height:32px; border-radius:8px">
+          <strong style="font-size:18px">GUILD ADICCION</strong>
+        </div>
+        <p class="muted" style="font-size:14px; margin:0">La guild de élite en MU Online. Unidos por la pasión al juego y las batallas épicas.</p>
+        <div class="muted" style="margin-top:16px">© 2025 – By Hopper</div>
+      </div>
+      
+      <div>
+        <strong style="display:block; margin-bottom:12px">Enlaces Rápidos</strong>
+        <div class="links" style="flex-direction:column; gap:8px">
+          <a href="index.html" style="color:var(--muted); font-size:14px">Inicio</a>
+          <a href="index.html#clases" style="color:var(--muted); font-size:14px">Clases</a>
+          <a href="index.html#reclutamiento" style="color:var(--muted); font-size:14px">Únete</a>
+          <a href="calculadora.html" style="color:var(--muted); font-size:14px">Calculadora</a>
+        </div>
+      </div>
+      
+      <div>
+        <strong style="display:block; margin-bottom:12px">Legal</strong>
+        <div class="links" style="flex-direction:column; gap:8px">
+          <a href="terms.html" style="color:var(--muted); font-size:14px">Términos</a>
+          <a href="privacy.html" style="color:var(--muted); font-size:14px">Privacidad</a>
+          <a href="#soporte" style="color:var(--muted); font-size:14px">Soporte</a>
+        </div>
       </div>
     </div>
   </footer>
 
   <script>
     // Mobile menu
-    const mobile = document.getElementById('mobile');
+    const mobile = document.getElementById('mobileMenu');
     const openBtn = document.getElementById('openMobile');
     const closeBtn = document.getElementById('closeMobile');
-    function toggleMobile(show){ mobile.style.display = show ? 'block' : 'none'; }
+    function toggleMobile(show){ 
+      mobile.style.display = show ? 'flex' : 'none';
+      document.body.style.overflow = show ? 'hidden' : '';
+    }
+    if(openBtn) openBtn.addEventListener('click', ()=> toggleMobile(true));
+    if(closeBtn) closeBtn.addEventListener('click', ()=> toggleMobile(false));
+    
+    // Cerrar al hacer click en un link
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', ()=> toggleMobile(false));
+    });
+
+    // Formulario de reclutamiento
+    const recruitForm = document.getElementById('recruitForm');
+    if(recruitForm){
+      // Validación en tiempo real
+      const inputs = recruitForm.querySelectorAll('input, select, textarea');
+      inputs.forEach(input => {
+        input.addEventListener('blur', function(){
+          if(this.value.trim() === '' && this.hasAttribute('required')){
+            this.style.borderColor = '#ef4444';
+          } else {
+            this.style.borderColor = '';
+          }
+        });
+        
+        input.addEventListener('input', function(){
+          if(this.value.trim() !== ''){
+            this.style.borderColor = 'var(--brand-1)';
+          }
+        });
+      });
+      
+      recruitForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        
+        // Animación de éxito
+        const btn = recruitForm.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Enviado';
+        btn.style.background = 'linear-gradient(90deg, #00ffa5, #00d4ff)';
+        
+        setTimeout(()=>{
+          alert('¡Gracias por tu interés! Tu solicitud ha sido enviada. Nos pondremos en contacto contigo pronto por Discord.');
+          recruitForm.reset();
+          btn.textContent = originalText;
+          btn.style.background = '';
+        }, 800);
+      });
+    }
+
+    // Smooth scroll para links internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if(href === '#' || href === '#terminos' || href === '#privacidad' || href === '#soporte') return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if(target){
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Registrar Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service Worker registrado'))
+          .catch(err => console.log('Error al registrar SW:', err));
+      });
+    }
+
+    // Intersection Observer para animaciones al hacer scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observar todas las secciones
+    document.querySelectorAll('.section').forEach(section => {
+      section.setAttribute('data-animate', '');
+      observer.observe(section);
+    });
+
+    // Botón scroll to top
+    const scrollTopBtn = document.createElement('button');
+    scrollTopBtn.id = 'scrollTop';
+    scrollTopBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    scrollTopBtn.setAttribute('aria-label', 'Volver arriba');
+    document.body.appendChild(scrollTopBtn);
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Cargar tema guardado
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    
+    if(themeToggle){
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Cambiar icono
+        const icon = themeToggle.querySelector('svg path');
+        if(newTheme === 'light'){
+          icon.setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z');
+        } else {
+          icon.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z');
+        }
+      });
+    }
 
 
     // Character selector (última evolución)

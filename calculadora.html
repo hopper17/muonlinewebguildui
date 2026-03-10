@@ -3,12 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Calculadora – REV3NGE</title>
-  <meta name="description" content="Calculadora de experiencia para MU Online – Guild REV3NGE." />
+  <title>Calculadora – ADICCION</title>
+  <meta name="description" content="Calculadora de experiencia para MU Online – Guild ADICCION." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#1ad1ff" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Ajustes suaves y los tabs (no tocan tus estilos base) -->
   <style>
@@ -184,8 +189,8 @@
   <header>
     <div class="container nav">
       <div class="brand">
-        <img class="logo" src="assets/logoguild.png" alt="Guild REV3NGE" loading="lazy" />
-        <h1>GUILD REV3NGE</h1>
+        <img class="logo" src="assets/logoguild.png" alt="Guild ADICCION" loading="lazy" />
+        <h1>GUILD ADICCION</h1>
       </div>
       <nav class="menu" aria-label="Main navigation">
         <a href="index.html">Inicio</a>
@@ -201,9 +206,50 @@
             <a href="calculadora.html">Calculadora EXP</a>
           </div>
         </div>
+        
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+          <div class="theme-toggle-slider">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </div>
+        </button>
+        
+        <!-- Compact Mode Toggle -->
+        <button class="theme-toggle" id="compactToggle" aria-label="Modo compacto" title="Modo compacto">
+          <div class="theme-toggle-slider">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </div>
+        </button>
         <!-- <a class="cta" href="#registrar">JUGAR AHORA</a> -->
 
       </nav>
+
+      <button class="burger" id="openMobile" aria-label="Abrir menú">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile" style="display:none">
+      <div class="mobile-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px">
+          <strong>GUILD ADICCION</strong>
+          <button id="closeMobile" style="background:transparent; border:0; color:var(--txt); cursor:pointer" aria-label="Cerrar menú">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <nav style="display:flex; flex-direction:column; gap:8px">
+          <a href="index.html" class="mobile-link">Inicio</a>
+          <a href="index.html#clases" class="mobile-link">Clases</a>
+          <a href="index.html#ranking" class="mobile-link">Top Kill</a>
+          <a href="index.html#reclutamiento" class="mobile-link">Únete</a>
+          <a href="calculadora.html" class="mobile-link">Calculadora EXP</a>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -221,12 +267,55 @@
       <section class="panel" style="padding:20px; display:grid; gap:16px">
         <!-- Tabs -->
         <div class="tabs" role="tablist" aria-label="Tipo de calculadora">
-          <button id="tabTiempo" class="tab-btn is-active" role="tab" aria-selected="true" aria-controls="panelTiempo">1 — Por Tiempo</button>
-          <button id="tabNivel" class="tab-btn" role="tab" aria-selected="false" aria-controls="panelNivel">2 — Por Nivel</button>
+          <button id="tabNivel" class="tab-btn is-active" role="tab" aria-selected="true" aria-controls="panelNivel">1 — Por Nivel</button>
+          <button id="tabTiempo" class="tab-btn" role="tab" aria-selected="false" aria-controls="panelTiempo">2 — Por Tiempo</button>
         </div>
 
-        <!-- ====== Panel 1: Calculadora por TIEMPO (TU FORMULARIO EXISTENTE) ====== -->
-        <div id="panelTiempo" class="tab-panel" role="tabpanel" aria-labelledby="tabTiempo">
+        <!-- ====== Panel 1: Calculadora por NIVEL ====== -->
+        <div id="panelNivel" class="tab-panel" role="tabpanel" aria-labelledby="tabNivel">
+          <h3 class="title" style="font-size:22px; margin:0 0 10px">Calculadora de experiencia por nivel</h3>
+          <p class="hint" style="margin:-6px 0 8px">Indica tu nivel actual, el nivel objetivo y tu EXP/s. Calcularemos el tiempo necesario.</p>
+
+          <form id="formNivel" onsubmit="calcularNivel(event)" style="display:grid; grid-template-columns:repeat(12,1fr); gap:14px">
+            <label class="panel" style="grid-column:span 6; padding:12px">
+              <span class="muted">Nivel actual</span>
+              <input id="nivelActual" class="input" type="number" min="1" max="1699" placeholder="1–1699" required>
+            </label>
+
+            <label class="panel" style="grid-column:span 6; padding:12px">
+              <span class="muted">Nivel al que quieres llegar</span>
+              <input id="nivelObjetivo" class="input" type="number" min="2" max="1700" placeholder="2–1700" required>
+              <small class="hint">Debe ser mayor que el nivel actual.</small>
+            </label>
+
+            <label class="panel" style="grid-column:span 6; padding:12px">
+              <span class="muted">% de progreso de Level <span class="muted" style="opacity:.8">(valor de Ctrl+F)</span></span>
+              <input id="progNivel" class="input" type="number" min="0" max="100" placeholder="0–100" value="0" required>
+            </label>
+
+            <label class="panel" style="grid-column:span 12; padding:12px">
+              <span class="muted">Experiencia por segundo</span>
+              <input id="expNivel" class="input" type="number" min="1" step="1" placeholder="p. ej. 6000000" required>
+            </label>
+
+            <div style="grid-column:1/-1; display:flex; align-items:center; gap:12px">
+              <button type="submit" class="btn">Calcular</button>
+              <span id="estadoNivel" class="muted"></span>
+            </div>
+          </form>
+
+          <div id="resultadoNivel" class="panel" role="status" aria-live="polite" style="display:none; padding:16px; margin-top:16px">
+          </div>
+          
+          <!-- Gráfico para calculadora por nivel -->
+          <div id="chartContainerNivel" class="panel" style="display:none; padding:20px; margin-top:16px">
+            <h3 style="margin:0 0 16px; font-size:16px">Progresión de Niveles</h3>
+            <canvas id="progressChartNivel"></canvas>
+          </div>
+        </div>
+
+        <!-- ====== Panel 2: Calculadora por TIEMPO ====== -->
+        <div id="panelTiempo" class="tab-panel" role="tabpanel" aria-labelledby="tabTiempo" hidden>
           <h3 class="title" style="font-size:22px; margin:0 0 10px">Calculadora de experiencia por tiempo</h3>
 
           <!-- Tu formulario original (IDs intactos) -->
@@ -237,12 +326,12 @@
             </label>
 
             <label class="panel" style="grid-column:span 6; padding:12px">
-              <span class="muted">2 - % de progreso de Level <span class="hint">(valor de Ctrl+F)</span></span>
+              <span class="muted">2 - % de progreso de Level <span class="hint" data-tooltip="Presiona Ctrl+F en el juego para ver tu progreso">(valor de Ctrl+F)</span></span>
               <input id="progreso" class="input" type="number" min="0" max="100" placeholder="0–100" required>
             </label>
 
             <label class="panel" style="grid-column:span 12; padding:12px">
-              <span class="muted">3 - Experiencia por segundo</span>
+              <span class="muted">3 - Experiencia por segundo <span class="hint" data-tooltip="Divide tu EXP/hora entre 3600">(?)</span></span>
               <input id="exp" class="input" type="number" min="0" step="1" placeholder="p. ej. 6000000" required>
             </label>
 
@@ -265,62 +354,95 @@
             </div>
           </form>
 
-          <!-- Resultado (tu JS escribe aquí) -->
-          <div id="resultado" class="panel" role="status" aria-live="polite" style="display:none; padding:16px">
-            <strong class="muted">Resultado</strong>
-            <div id="resultadoLevel" class="title" style="font-size:40px; margin-top:6px">—</div>
+          <!-- Resultado (tu JS escribe aquí) - MOVIDO FUERA DEL FORM -->
+          <div id="resultado" class="panel" role="status" aria-live="polite" style="display:none; padding:20px; margin-top:16px">
+            <div style="margin-bottom:12px">
+              <strong style="color:var(--muted); font-size:14px">Resultado</strong>
+            </div>
+            <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap">
+              <span style="font-size:18px; color:var(--muted)">Vas a llegar al</span>
+              <div id="resultadoLevel" class="title" style="font-size:48px; margin:0; line-height:1">—</div>
+            </div>
+            <div id="resultadoInfo"></div>
+            <div id="progressBar" style="margin-top:20px">
+              <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:12px">
+                <span class="muted">Progreso</span>
+                <span id="progressPercent" class="muted">0%</span>
+              </div>
+              <div style="height:8px; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden">
+                <div id="progressFill" style="height:100%; width:0%; background:linear-gradient(90deg, var(--brand-1), var(--brand-2)); transition:width .6s ease"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Gráfico de Progresión -->
+          <div id="chartContainer" class="panel" style="display:none; padding:20px; margin-top:16px">
+            <h3 style="margin:0 0 16px; font-size:16px">Progresión de Niveles</h3>
+            <canvas id="progressChart"></canvas>
           </div>
         </div>
+      </section>
 
-        <!-- ====== Panel 2: Calculadora por NIVEL (NUEVA) ====== -->
-        <div id="panelNivel" class="tab-panel" role="tabpanel" aria-labelledby="tabNivel" hidden>
-          <h3 class="title" style="font-size:22px; margin:0 0 10px">Calculadora de experiencia por nivel</h3>
-          <p class="hint" style="margin:-6px 0 8px">Indica tu nivel actual, el nivel objetivo y tu EXP/s. Calcularemos el tiempo necesario.</p>
+      <!-- Historial de cálculos -->
+      <section class="panel" style="padding:20px; margin-top:20px">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+          <h3 class="title" style="font-size:18px; margin:0">Mis Personajes</h3>
+          <button id="addCharacter" class="btn" style="padding:8px 16px; font-size:13px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            Agregar
+          </button>
+        </div>
+        <div id="characterList" style="display:grid; gap:12px"></div>
+      </section>
 
-          <form id="formNivel" onsubmit="calcularNivel(event)" style="display:grid; grid-template-columns:repeat(12,1fr); gap:14px">
-            <label class="panel" style="grid-column:span 6; padding:12px">
-              <span class="muted">Nivel actual</span>
-              <input id="nivelActual" class="input" type="number" min="1" max="1699" placeholder="1–1699" required>
-            </label>
-
-            <label class="panel" style="grid-column:span 6; padding:12px">
-              <span class="muted">Nivel al que quieres llegar</span>
-              <input id="nivelObjetivo" class="input" type="number" min="2" max="1700" placeholder="2–1700" required>
-              <small class="hint">Debe ser mayor que el nivel actual.</small>
-            </label>
-
-            <label class="panel" style="grid-column:span 6; padding:12px">
-              <span class="muted">2 - % de progreso de Level <span class="muted" style="opacity:.8">(valor de Ctrl+F)</span></span>
-              <input id="progNivel" class="input" type="number" min="0" max="100" placeholder="0–100" value="0" required>
-            </label>
-
-            <label class="panel" style="grid-column:span 12; padding:12px">
-              <span class="muted">Experiencia por segundo</span>
-              <input id="expNivel" class="input" type="number" min="1" step="1" placeholder="p. ej. 6000000" required>
-            </label>
-
-            <div style="grid-column:1/-1; display:flex; align-items:center; gap:12px">
-              <button type="submit" class="btn">Calcular</button>
-              <span id="estadoNivel" class="muted"></span>
-            </div>
-          </form>
-
-          <div id="resultadoNivel" class="panel" role="status" aria-live="polite" style="display:none; padding:16px"></div>
+      <!-- Historial de cálculos -->
+      <section class="panel" style="padding:20px; margin-top:20px">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+          <h3 class="title" style="font-size:18px; margin:0">Historial de Cálculos</h3>
+          <button id="clearHistory" class="btn btn-secondary" style="padding:8px 16px; font-size:13px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle">
+              <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+            </svg>
+            Limpiar
+          </button>
+        </div>
+        <div id="historyList" class="muted" style="font-size:14px">
+          <p style="text-align:center; opacity:.6">No hay cálculos recientes</p>
         </div>
       </section>
     </div>
   </main>
 
   <footer>
-    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px">
+    <div class="container" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:32px; padding:32px 0">
       <div>
-        <strong>GUILD REV3NGE</strong>
-        <div class="muted">© 2025 – By Hopper</div>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
+          <img src="assets/logoguild.png" alt="ADICCION" style="width:32px; height:32px; border-radius:8px">
+          <strong style="font-size:18px">GUILD ADICCION</strong>
+        </div>
+        <p class="muted" style="font-size:14px; margin:0">La guild de élite en MU Online. Unidos por la pasión al juego y las batallas épicas.</p>
+        <div class="muted" style="margin-top:16px">© 2025 – By Hopper</div>
       </div>
-      <div class="links">
-        <a href="#terminos">Términos</a>
-        <a href="#privacidad">Privacidad</a>
-        <a href="#soporte">Soporte</a>
+      
+      <div>
+        <strong style="display:block; margin-bottom:12px">Enlaces Rápidos</strong>
+        <div class="links" style="flex-direction:column; gap:8px">
+          <a href="index.html" style="color:var(--muted); font-size:14px">Inicio</a>
+          <a href="index.html#clases" style="color:var(--muted); font-size:14px">Clases</a>
+          <a href="index.html#reclutamiento" style="color:var(--muted); font-size:14px">Únete</a>
+          <a href="calculadora.html" style="color:var(--muted); font-size:14px">Calculadora</a>
+        </div>
+      </div>
+      
+      <div>
+        <strong style="display:block; margin-bottom:12px">Legal</strong>
+        <div class="links" style="flex-direction:column; gap:8px">
+          <a href="terms.html" style="color:var(--muted); font-size:14px">Términos</a>
+          <a href="privacy.html" style="color:var(--muted); font-size:14px">Privacidad</a>
+          <a href="#soporte" style="color:var(--muted); font-size:14px">Soporte</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -330,11 +452,54 @@
     if (yearSpan) {
       yearSpan.textContent = new Date().getFullYear();
     }
+    
+    // Mobile menu
+    const mobile = document.getElementById('mobileMenu');
+    const openBtn = document.getElementById('openMobile');
+    const closeBtn = document.getElementById('closeMobile');
+    function toggleMobile(show){ 
+      if(mobile){
+        mobile.style.display = show ? 'flex' : 'none';
+        document.body.style.overflow = show ? 'hidden' : '';
+      }
+    }
+    if(openBtn) openBtn.addEventListener('click', ()=> toggleMobile(true));
+    if(closeBtn) closeBtn.addEventListener('click', ()=> toggleMobile(false));
+    
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', ()=> toggleMobile(false));
+    });
+    
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Cargar tema guardado
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    
+    if(themeToggle){
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Cambiar icono
+        const icon = themeToggle.querySelector('svg path');
+        if(newTheme === 'light'){
+          icon.setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z');
+        } else {
+          icon.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z');
+        }
+      });
+    }
   </script>
 
   <!-- Datos y lógica existente -->
   <script src="data_exp.js"></script>
   <script src="calculadora.js"></script>
+  <script src="tracker.js"></script>
 
   <!-- Tabs + nueva calculadora POR NIVEL (no toca tu función calcular existente) -->
   <script>
@@ -356,7 +521,7 @@
       }
       tabTiempo.addEventListener('click', ()=> show('tiempo'));
       tabNivel .addEventListener('click', ()=> show('nivel'));
-      show('tiempo');
+      show('nivel'); // Mostrar "Por Nivel" por defecto
     })();
 
     // Marca “datos listos” y habilita botón de la calculadora por tiempo
@@ -430,8 +595,56 @@ function calcularNivel(e){
       <div class="muted" style="margin-top:6px">
         De nivel <b>${nivelA}</b> (${prog}% del nivel actual) a <b>${nivelB}</b> con <b>${expPS.toLocaleString()}</b> EXP/s.
       </div>
+      <button id="shareCalcNivel" class="btn" style="padding:10px 18px; font-size:14px; background:linear-gradient(135deg, var(--brand-1), var(--brand-2)); border:0; margin-top:16px; display:inline-flex; align-items:center; gap:8px; cursor:pointer; border-radius:10px; font-weight:700; box-shadow:0 6px 20px rgba(26,209,255,.25)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/>
+        </svg>
+        Compartir Resultado
+      </button>
     `;
     out.style.display='block';
+    
+    // Guardar en historial
+    if(typeof saveToHistory === 'function'){
+      saveToHistory({
+        type: 'nivel',
+        from: nivelA,
+        progress: prog,
+        to: nivelB,
+        time: `${d}d ${h}h ${m}m ${s}s`,
+        date: new Date().toLocaleString()
+      });
+    }
+    
+    // Guardar datos para compartir
+    window.lastCalculationData = {
+      type: 'nivel',
+      from: nivelA,
+      progress: prog,
+      to: nivelB,
+      exp: expPS,
+      dias: d,
+      horas: h,
+      minutos: m,
+      time: `${d}d ${h}h ${m}m ${s}s`
+    };
+    
+    // Agregar event listener al botón de compartir
+    setTimeout(function() {
+      const shareBtn = document.getElementById('shareCalcNivel');
+      if (shareBtn) {
+        shareBtn.onclick = function() {
+          if (window.lastCalculationData) {
+            shareCalculation(window.lastCalculationData);
+          }
+        };
+      }
+    }, 100);
+    
+    // Actualizar gráfico para calculadora por nivel
+    if(typeof updateProgressChartNivel === 'function'){
+      updateProgressChartNivel(nivelA, prog, nivelB, 0, {d, h, m, s});
+    }
   }
     // Reflejo visual del resultado grande (no toca tu cálculo por tiempo)
     (function mountResultObserver(){

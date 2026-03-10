@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://muonlinewebguildui.vercel.app/sitemap.xml
